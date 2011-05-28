@@ -197,20 +197,12 @@
     <string name="preferred_network_mode_summary" msgid="1434820673166126609">"Skift netværksdriftstilstand"</string>
     <string name="preferred_network_mode_dialogtitle" msgid="8176355237105593793">"Foretrukken netværkstilstand"</string>
   <string-array name="preferred_network_mode_choices">
-    <item msgid="2987674222882365152">"Global"</item>
-    <item msgid="3273348576277144124">"Kun EvDo"</item>
-    <item msgid="454610224530856274">"CDMA u. EvDo"</item>
-    <item msgid="8928247118825616081">"Automatisk CDMA/EvDo"</item>
     <item msgid="8595462903294812666">"Automatisk GSM/WCDMA"</item>
     <item msgid="5189164180446264504">"Kun WCDMA"</item>
     <item msgid="5714714953966979187">"Kun GSM"</item>
     <item msgid="4775796025725908913">"GSM/WCDMA foretrækkes"</item>
   </string-array>
   <string-array name="preferred_network_mode_values">
-    <item msgid="7164534877603905916">"7"</item>
-    <item msgid="2520921432080278213">"6"</item>
-    <item msgid="4978887990900575049">"5"</item>
-    <item msgid="6891436459357445885">"4"</item>
     <item msgid="339825043192186272">"3"</item>
     <item msgid="3062641619893382241">"2"</item>
     <item msgid="2494009747968041784">"1"</item>
