@@ -234,7 +234,12 @@ public class Settings extends PreferenceActivity implements DialogInterface.OnCl
             mCdmaOptions = new CdmaOptions(this, prefSet);
             mGsmUmtsOptions = new GsmUmtsOptions(this, prefSet);
         } else {
-            prefSet.removePreference(mButtonPreferredNetworkMode);
+         //   prefSet.removePreference(mButtonPreferredNetworkMode);
+            mButtonPreferredNetworkMode.setOnPreferenceChangeListener(this);
+            int settingsNetworkMode = android.provider.Settings.Secure.getInt(mPhone.getContext().
+                    getContentResolver(),android.provider.Settings.Secure.PREFERRED_NETWORK_MODE,
+                    preferredNetworkMode);
+            mButtonPreferredNetworkMode.setValue(Integer.toString(settingsNetworkMode));
             int phoneType = mPhone.getPhoneType();
             if (phoneType == Phone.PHONE_TYPE_CDMA) {
                 mCdmaOptions = new CdmaOptions(this, prefSet);
