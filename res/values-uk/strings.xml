@@ -197,6 +197,10 @@
     <string name="preferred_network_mode_summary" msgid="1434820673166126609">"Змінити режим роботи мережі"</string>
     <string name="preferred_network_mode_dialogtitle" msgid="8176355237105593793">"Рекоменд. режим мережі"</string>
     <string-array name="preferred_network_mode_choices">
+      <item msgid="2987674222882365152">"Глобальний"</item>
+      <item msgid="3273348576277144124">"Лише EvDo"</item>
+      <item msgid="454610224530856274">"CDMA без EvDo"</item>
+      <item msgid="8928247118825616081">"Авто CDMA / EvDo"</item>
       <item msgid="8595462903294812666">"Авто GSM / WCDMA"</item>
       <item msgid="5189164180446264504">"Лише WCDMA"</item>
       <item msgid="5714714953966979187">"Лише GSM"</item>

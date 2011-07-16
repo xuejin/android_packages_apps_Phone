@@ -644,12 +644,20 @@
     <item></item>
   </string-array>
   <string-array name="preferred_network_mode_choices">
+    <item>גלובלי</item>
+    <item>EVDO בלבד</item>
+    <item>CDMA ללא EvDo</item>
+    <item>CDMA / EVDO אוטומטית</item>
     <item>GSM / WCDMA אוטומטית</item>
     <item>WCDMA בלבד</item>
     <item>GSM בלבד</item>
     <item>GSM / WCDMA מועדפת</item>
   </string-array>
   <string-array name="preferred_network_mode_values">
+    <item>"7"</item>
+    <item>"6"</item>
+    <item>"5"</item>
+    <item>"4"</item>
     <item>"3"</item>
     <item>"2"</item>
     <item>"1"</item>
