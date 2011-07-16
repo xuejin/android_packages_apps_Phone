@@ -604,8 +604,8 @@
     <string name="multi_category_disable">Multi-category disabled</string>
 
     <!-- GSM/UMTS Options strings -->
-    <string name="gsm_umts_network_preferences_title">GSM/UMTS Network Preferences</string>
-    <string name="gsm_umts_network_preferneces_summary">Not implemented yet! </string>
+    <string name="gsm_umts_network_preferences_title">Network Preferences</string>
+    <string name="gsm_umts_network_preferneces_summary">Change the network operating mode</string>
     <string name="gsm_umts_network_preferences_dialogtitle">GSM/UMTS network preferences</string>
     <string-array name="gsm_umts_network_preferences_choices">
         <item>GSM/WCDMA (auto mode)</item>
@@ -614,12 +614,11 @@
         <item>GSM/WCDA (WCDMA preferred)</item>
     </string-array>
     <string-array name="gsm_umts_network_preferences_values">
-        <item>"0"</item>
-        <item>"1"</item>
-        <item>"2"</item>
         <item>"3"</item>
+        <item>"2"</item>
+        <item>"1"</item>
+        <item>"0"</item>
     </string-array>
-
     <!-- Mobile network settings screen, setting option name -->
     <string name="prefer_2g">Use only 2G networks</string>
     <!-- Mobile network settings screen, setting summary text -->
@@ -663,8 +662,8 @@
         <item>"1"</item>
         <item>"2"</item>
     </string-array>
-    <string name="cdma_network_preferences_title">CDMA Network Preferences</string>
-    <string name="cdma_network_preferneces_summary">Not implemented yet! </string>
+    <string name="cdma_network_preferences_title">Network Preferences</string>
+    <string name="cdma_network_preferneces_summary">Change the network operating mode</string>
     <string name="cdma_network_preferences_dialogtitle">CDMA network preferences</string>
     <string-array name="cdma_network_preferences_choices">
         <item>CDMA/EvDo</item>
