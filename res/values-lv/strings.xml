@@ -335,10 +335,10 @@
     <item msgid="4684679567848300935">"GSM/WCDA (ieteicams WCDMA)"</item>
   </string-array>
   <string-array name="gsm_umts_network_preferences_values">
-    <item msgid="117293148930527265">"0"</item>
-    <item msgid="2264578612775462302">"1"</item>
-    <item msgid="1268081943590316978">"2"</item>
-    <item msgid="4469871047641902607">"3"</item>
+    <item msgid="117293148930527265">"3"</item>
+    <item msgid="2264578612775462302">"2"</item>
+    <item msgid="1268081943590316978">"1"</item>
+    <item msgid="4469871047641902607">"0"</item>
   </string-array>
     <string name="prefer_2g" msgid="8442550937280449639">"Izmantot tikai 2G tīklus"</string>
     <string name="prefer_2g_summary" msgid="1976491403210690759">"Ietaupa akumulatora jaudu"</string>
@@ -371,9 +371,9 @@
     <item msgid="2683555124647197574">"Tikai EvDo"</item>
   </string-array>
   <string-array name="cdma_network_preferences_values">
-    <item msgid="5584048199290030331">"0"</item>
-    <item msgid="5741268642513143762">"1"</item>
-    <item msgid="419525200910932450">"2"</item>
+    <item msgid="5584048199290030331">"4"</item>
+    <item msgid="5741268642513143762">"5"</item>
+    <item msgid="419525200910932450">"6"</item>
   </string-array>
     <string name="cdma_subscription_title" msgid="445607520753045412">"CDMA abonements"</string>
     <string name="cdma_subscription_summary" msgid="2530890766115781140">"Mainīt no RUIM/SIM uz NV un otrādi"</string>

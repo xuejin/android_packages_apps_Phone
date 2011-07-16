@@ -671,9 +671,9 @@
         <item>EvDo only</item>
     </string-array>
     <string-array name="cdma_network_preferences_values">
-        <item>"0"</item>
-        <item>"1"</item>
-        <item>"2"</item>
+        <item>"4"</item>
+        <item>"5"</item>
+        <item>"6"</item>
     </string-array>
     <string name="cdma_subscription_title">CDMA Subscription</string>
     <string name="cdma_subscription_summary">Change between RUIM/SIM and NV</string>
