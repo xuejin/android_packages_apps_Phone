@@ -1539,4 +1539,21 @@
     <string name="dialog_phone_goggles_unauthorized">Making a phone call may not be wise at this time.</string>
     <string name="dialog_phone_goggles_ok">Call</string>
     <string name="dialog_phone_goggles_cancel">Cancel</string>
+
+    <!-- Crystal Talk -->
+    <string name="voice_quality_preferences_title">CrystalTalk setting</string>
+    <string name="voice_quality_summary">Optimise in-call audio profile.</string>
+    <string name="voice_quality_dialogtitle">Voice quality:</string>
+    <string-array name="voice_quality_choices">
+        <item>Normal</item>
+        <item>Clear</item>
+        <item>Crisp</item>
+        <item>Bright</item>
+    </string-array>
+    <string-array name="voice_quality_values">
+        <item>Normal</item>
+        <item>Clear</item>
+        <item>Crisp</item>
+        <item>Bright</item>
+    </string-array>
 </resources>
