@@ -1262,8 +1262,9 @@ public class PhoneApp extends Application implements AccelerometerListener.Orien
      */
     /* package */ void updatePhoneState(Phone.State state) {
         if (state != mLastPhoneState) {
-            if (getResources().getBoolean(R.bool.crystaltalk_enabled) == true) {
-                AudioSystem.setParameters("motoVoiceQualityConfig="+ mSettings.getVoiceQuality()); 
+            String voiceQualSetting = mSettings.getVoiceQuality();
+            if (voiceQualSetting != null) {
+                AudioSystem.setParameters("motoVoiceQualityConfig=" + voiceQualSetting);
             }
             mLastPhoneState = state;
             updateProximitySensorMode(state);
