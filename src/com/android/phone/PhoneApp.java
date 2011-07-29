@@ -592,7 +592,7 @@ public class PhoneApp extends Application implements AccelerometerListener.Orien
         mShouldRestoreMuteOnInCallResume = false;
 
         // add by cytown
-        mSettings = CallFeaturesSetting.getInstance(PreferenceManager.getDefaultSharedPreferences(this));
+        mSettings = CallFeaturesSetting.getInstance(this);
         if (mVibrator == null) {
             mVibrator = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
             mAM = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);

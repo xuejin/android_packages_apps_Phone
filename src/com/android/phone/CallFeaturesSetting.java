@@ -1662,7 +1662,7 @@ public class CallFeaturesSetting extends PreferenceActivity
         createSipCallSettings();
 
         // add by cytown for vibrate
-        init(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()));
+        init(getApplicationContext(), PreferenceManager.getDefaultSharedPreferences(getApplicationContext()));
         mButtonVibOutgoing = (CheckBoxPreference) prefSet.findPreference(BUTTON_VIBRATE_OUTGOING);
         mButtonVibOutgoing.setChecked(mVibOutgoing);
         mButtonVib45 = (CheckBoxPreference) prefSet.findPreference(BUTTON_VIBRATE_45);
@@ -2115,15 +2115,16 @@ public class CallFeaturesSetting extends PreferenceActivity
     }
 
     // add by cytown
-    public static CallFeaturesSetting getInstance(SharedPreferences pref) {
+    public static CallFeaturesSetting getInstance(Context context) {
         if (mInstance == null) {
+            SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
             mInstance = new CallFeaturesSetting();
-            mInstance.init(pref);
+            mInstance.init(context, pref);
         }
         return mInstance;
     }
 
-    private void init(SharedPreferences pref) {
+    private void init(Context context, SharedPreferences pref) {
         mVibOutgoing = pref.getBoolean(BUTTON_VIBRATE_OUTGOING, true);
         mVib45 = pref.getBoolean(BUTTON_VIBRATE_45, false);
         mVibHangup = pref.getBoolean(BUTTON_VIBRATE_HANGUP, true);
@@ -2144,7 +2145,7 @@ public class CallFeaturesSetting extends PreferenceActivity
         mTrackHangup = pref.getString(BUTTON_TRACKBALL_HANGUP, "-1");
         mHideHoldButton = pref.getBoolean(BUTTON_HIDE_HOLD_BUTTON, false);
         mBlackRegex = pref.getBoolean(BUTTON_BLACK_REGEX, false);
-        if (getResources().getBoolean(R.bool.crystaltalk_enabled)) {
+        if (context.getResources().getBoolean(R.bool.crystaltalk_enabled)) {
             mVoiceQuality = pref.getString(BUTTON_VOICE_QUALITY_KEY, "Normal");
         } else {
             mVoiceQuality = null;
@@ -2276,10 +2277,9 @@ public class CallFeaturesSetting extends PreferenceActivity
 
     @Override
     protected void onStop() {
-
+        Context context = getApplicationContext();
         // System.out.println("save please!");
-        SharedPreferences pref = PreferenceManager
-                .getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         Editor outState = pref.edit();
         outState.putBoolean(BUTTON_VIBRATE_OUTGOING, mButtonVibOutgoing.isChecked());
         outState.putBoolean(BUTTON_VIBRATE_45, mButtonVib45.isChecked());
@@ -2305,7 +2305,7 @@ public class CallFeaturesSetting extends PreferenceActivity
             outState.putString(BUTTON_VOICE_QUALITY_KEY, mButtonVoiceQuality.getValue());
         }
         outState.commit();
-        init(pref);
+        init(context, pref);
         super.onStop();
     }
 
