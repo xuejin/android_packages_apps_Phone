@@ -601,10 +601,7 @@ public class CallFeaturesSetting extends PreferenceActivity
     }
 
     public String getVoiceQuality() {
-        if (mButtonVoiceQuality != null) {
-            return mVoiceQuality;
-        }
-        return null;
+        return mVoiceQuality;
     }
 
     private void handleNotificationChange(Object objValue) {
@@ -2147,7 +2144,11 @@ public class CallFeaturesSetting extends PreferenceActivity
         mTrackHangup = pref.getString(BUTTON_TRACKBALL_HANGUP, "-1");
         mHideHoldButton = pref.getBoolean(BUTTON_HIDE_HOLD_BUTTON, false);
         mBlackRegex = pref.getBoolean(BUTTON_BLACK_REGEX, false);
-        mVoiceQuality = pref.getString(BUTTON_VOICE_QUALITY_KEY, "Normal");
+        if (getResources().getBoolean(R.bool.crystaltalk_enabled)) {
+            mVoiceQuality = pref.getString(BUTTON_VOICE_QUALITY_KEY, "Normal");
+        } else {
+            mVoiceQuality = null;
+        }
         ObjectInputStream ois = null;
         boolean correctVer = false;
         try {
