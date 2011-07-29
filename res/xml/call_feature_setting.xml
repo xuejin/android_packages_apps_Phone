@@ -246,6 +246,6 @@
         android:summary="@string/voice_quality_summary"
         android:entries="@array/voice_quality_choices"
         android:entryValues="@array/voice_quality_values"
-        android:dialogTitle="@string/voice_quality_dialogtitle"/>
+        android:dialogTitle="@string/voice_quality_preferences_title"/>
 
 </PreferenceScreen>

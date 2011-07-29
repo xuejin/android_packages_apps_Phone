@@ -1541,9 +1541,8 @@
     <string name="dialog_phone_goggles_cancel">Cancel</string>
 
     <!-- Crystal Talk -->
-    <string name="voice_quality_preferences_title">CrystalTalk setting</string>
-    <string name="voice_quality_summary">Optimise in-call audio profile.</string>
-    <string name="voice_quality_dialogtitle">Voice quality:</string>
+    <string name="voice_quality_preferences_title">Voice quality</string>
+    <string name="voice_quality_summary">Set a voice profile to enhance your listening experience</string>
     <string-array name="voice_quality_choices">
         <item>Normal</item>
         <item>Clear</item>
