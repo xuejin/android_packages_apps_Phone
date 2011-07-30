@@ -761,4 +761,15 @@
     <string name="dialog_phone_goggles_unauthorized">Effectuer un appel n\'est pas recommandé pour le moment.</string>
     <string name="dialog_phone_goggles_ok">Appeler</string>
     <string name="dialog_phone_goggles_cancel">Annuler</string>
+
+    <!-- Crystal Talk -->
+    <string name="voice_quality_preferences_title">CrystalTalk</string>
+    <string name="voice_quality_summary">Utiliser un profil audio pour améliorer la qualité d\'écoute</string>
+    <string-array name="voice_quality_choices">
+        <item>Normal</item>
+        <item>Claire</item>
+        <item>Nette</item>
+        <item>Vive</item>
+    </string-array>
+
 </resources>
