@@ -1553,11 +1553,11 @@ public class CallFeaturesSetting extends PreferenceActivity
         mButtonVoiceQuality = (ListPreference) findPreference(BUTTON_VOICE_QUALITY_KEY);
 
         if (mButtonVoiceQuality != null) {
-            if (getResources().getBoolean(R.bool.crystaltalk_enabled)) {
-                mButtonVoiceQuality.setOnPreferenceChangeListener(this);
-            } else {
+            if (TextUtils.isEmpty(getResources().getString(R.string.voice_quality_param))) {
                 prefSet.removePreference(mButtonVoiceQuality);
                 mButtonVoiceQuality = null;
+            } else {
+                mButtonVoiceQuality.setOnPreferenceChangeListener(this);
             }
         }
 
@@ -2145,10 +2145,17 @@ public class CallFeaturesSetting extends PreferenceActivity
         mTrackHangup = pref.getString(BUTTON_TRACKBALL_HANGUP, "-1");
         mHideHoldButton = pref.getBoolean(BUTTON_HIDE_HOLD_BUTTON, false);
         mBlackRegex = pref.getBoolean(BUTTON_BLACK_REGEX, false);
-        if (context.getResources().getBoolean(R.bool.crystaltalk_enabled)) {
-            mVoiceQuality = pref.getString(BUTTON_VOICE_QUALITY_KEY, "Normal");
-        } else {
+        if (TextUtils.isEmpty(context.getResources().getString(R.string.voice_quality_param))) {
             mVoiceQuality = null;
+        } else {
+            mVoiceQuality = pref.getString(BUTTON_VOICE_QUALITY_KEY, null);
+            if (mVoiceQuality == null) {
+                /* use first value of entry list */
+                String[] values = context.getResources().getStringArray(R.array.voice_quality_values);
+                if (values.length > 0) {
+                    mVoiceQuality = values[0];
+                }
+            }
         }
         ObjectInputStream ois = null;
         boolean correctVer = false;

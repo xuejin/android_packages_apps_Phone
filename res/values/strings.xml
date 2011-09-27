@@ -1540,19 +1540,13 @@
     <string name="dialog_phone_goggles_ok">Call</string>
     <string name="dialog_phone_goggles_cancel">Cancel</string>
 
-    <!-- Crystal Talk -->
+    <!-- Voice quality filter -->
     <string name="voice_quality_preferences_title">Voice quality</string>
     <string name="voice_quality_summary">Set a voice profile to enhance your listening experience</string>
-    <string-array name="voice_quality_choices">
-        <item>Normal</item>
-        <item>Clear</item>
-        <item>Crisp</item>
-        <item>Bright</item>
-    </string-array>
-    <string-array name="voice_quality_values">
-        <item>Normal</item>
-        <item>Clear</item>
-        <item>Crisp</item>
-        <item>Bright</item>
-    </string-array>
+    <!-- Do not remove those, they're used from overlays -->
+    <string name="voice_quality_entry_normal">Normal</string>
+    <string name="voice_quality_entry_clear">Clear</string>
+    <string name="voice_quality_entry_crisp">Crisp</string>
+    <string name="voice_quality_entry_bright">Bright</string>
+
 </resources>
