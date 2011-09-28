@@ -1542,7 +1542,7 @@
 
     <!-- Voice quality filter -->
     <string name="voice_quality_preferences_title">Voice quality</string>
-    <string name="voice_quality_summary">Set a voice profile to enhance your listening experience</string>
+    <string name="voice_quality_summary">"Select optimized in-call audio profile (CrystalTalk)"</string>
     <!-- Do not remove those, they're used from overlays -->
     <string name="voice_quality_entry_normal">Normal</string>
     <string name="voice_quality_entry_clear">Clear</string>
