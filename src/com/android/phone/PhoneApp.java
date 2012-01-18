@@ -1267,7 +1267,8 @@ public class PhoneApp extends Application implements AccelerometerListener.Orien
     /* package */ void updatePhoneState(Phone.State state) {
         if (state != mLastPhoneState) {
             String voiceQualSetting = mSettings.getVoiceQuality();
-            if (mVoiceQualityParam != null && voiceQualSetting != null) {
+            if (mVoiceQualityParam != null && voiceQualSetting != null
+                    && !voiceQualSetting.equals("-1")) {
                 AudioSystem.setParameters(mVoiceQualityParam + "=" + voiceQualSetting);
             }
             mLastPhoneState = state;
