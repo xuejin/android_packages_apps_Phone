@@ -37,21 +37,50 @@ public class PhoneToggler extends BroadcastReceiver  {
         if (mHandler==null) mHandler = new MyHandler();
         return mHandler;
     }
-
+ 
     @Override
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals(MODIFY_NETWORK_MODE)) {
-            if (DBG) Log.d(LOG_TAG,"Got modify intent");
-        if (intent.getExtras()!=null) {
-            int networkMode = intent.getExtras().getInt(NETWORK_MODE);
-            if (networkMode == Phone.NT_MODE_GSM_ONLY || networkMode == Phone.NT_MODE_WCDMA_PREF || networkMode == Phone.NT_MODE_WCDMA_ONLY) {
-                if (DBG) Log.d(LOG_TAG,"Will modify it to: "+networkMode);
-                changeNetworkMode(networkMode);
-                if (DBG) Log.d(LOG_TAG,"Accepted modification of network mode to : "+networkMode);
-            } else {
-                Log.e(LOG_TAG,"Not accepted network mode: "+networkMode);
+            if (DBG) {
+            	Log.d(LOG_TAG,"Got modify intent");
             }
-        }
+            if (intent.getExtras() != null) {
+                int networkMode = intent.getExtras().getInt(NETWORK_MODE);
+                boolean networkModeOk = false;
+                int phoneType = getPhone().getPhoneType();
+
+                if (phoneType == Phone.PHONE_TYPE_GSM) {
+                    if (networkMode == Phone.NT_MODE_GSM_ONLY
+                            || networkMode == Phone.NT_MODE_GSM_UMTS
+                            || networkMode == Phone.NT_MODE_WCDMA_PREF
+                            || networkMode == Phone.NT_MODE_WCDMA_ONLY) {
+                        networkModeOk = true;
+                    }
+                } else if (phoneType == Phone.PHONE_TYPE_CDMA) {
+                    if (networkMode == Phone.NT_MODE_CDMA
+                            || networkMode == Phone.NT_MODE_CDMA_NO_EVDO
+                            || networkMode == Phone.NT_MODE_EVDO_NO_CDMA) {
+                        networkModeOk = true;
+                    }
+                }
+                if (context.getResources().getBoolean(R.bool.world_phone)) {
+                    if (networkMode == Phone.NT_MODE_GLOBAL) {
+                        networkModeOk = true;
+                    }
+                }
+
+                if (networkModeOk) {
+                    if (DBG) {
+                        Log.d(LOG_TAG,"Will modify it to: "+networkMode);
+                    }
+                    changeNetworkMode(networkMode);
+                    if (DBG) {
+                        Log.d(LOG_TAG,"Accepted modification of network mode to :"+networkMode);
+                    }
+                } else {
+                    Log.e(LOG_TAG,"Not accepted network mode: "+networkMode);
+                }
+            }
         } else if (intent.getAction().equals(REQUEST_NETWORK_MODE)) {
             if (DBG) Log.d(LOG_TAG,"Sending Intent with current phone network mode");
             triggerIntent();
