@@ -751,4 +751,13 @@
     <string name="vibrate_call_waiting_sum">Vibriere bei Anklopfen</string>
     <string name="perm_change_mobile_network">Mobilfunkstandard wechseln (2G/3G)</string>
     <string name="perm_change_mobile_network_desc">Anwendungen mit dieser Berechtigung können jederzeit zwischen 2G- und 3G-Netz wechseln. 3G ist schneller, verbraucht mehr Batterieladung und kann teurer sein</string>
+
+    <!-- Voice quality filter -->
+    <string name="voice_quality_preferences_title">Sprachqualität</string>
+    <string name="voice_quality_summary">Ein Sprachprofil zur Verbesserung der Hörqualität festlegen</string>
+    <string name="voice_quality_entry_normal">Normal</string>
+    <string name="voice_quality_entry_clear">Klar</string>
+    <string name="voice_quality_entry_crisp">Sehr klar</string>
+    <string name="voice_quality_entry_bright">Hell</string>
+
 </resources>

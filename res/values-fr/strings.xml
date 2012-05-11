@@ -738,4 +738,13 @@
     <string name="vibrate_call_waiting_sum">Vibrer lorsqu\'un appel est en attente</string>
     <string name="perm_change_mobile_network">Changer la technologie réseau (2G/3G)</string>
     <string name="perm_change_mobile_network_desc">Les applications possédant cette permission peuvent à chaque instant changer entre les technologies 2G et 3G. La 3G est plus rapide, consomme plus de batterie, et peut également vous coûter plus</string>
+
+    <!-- Voice quality filter -->
+    <string name="voice_quality_preferences_title">Qualité d\'écoute</string>
+    <string name="voice_quality_summary">Utiliser un filtre audio pour améliorer la qualité d\'écoute</string>
+    <string name="voice_quality_entry_normal">Normal</string>
+    <string name="voice_quality_entry_clear">Claire</string>
+    <string name="voice_quality_entry_crisp">Nette</string>
+    <string name="voice_quality_entry_bright">Vive</string>
+
 </resources>

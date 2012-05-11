@@ -752,4 +752,9 @@
     <string name="vibrate_hangup_sum">Вибрировать когда разговор окончен</string>
     <string name="vibrate_call_waiting">Вибрировать при ожидании</string>
     <string name="vibrate_call_waiting_sum">Вибрировать при ожидании на линии</string>
+
+    <!-- Voice quality filter -->
+    <string name="voice_quality_preferences_title">Настройка CrystalTalk</string>
+    <string name="voice_quality_summary">Аудио-профили входящего вызова</string>
+
 </resources>
