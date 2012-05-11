@@ -173,6 +173,14 @@
             android:targetClass="com.android.phone.CdmaCallOptions"/>
     </PreferenceScreen>
 
+    <ListPreference
+	        android:key="button_voice_quality_key"
+        android:title="@string/voice_quality_preferences_title"
+        android:summary="@string/voice_quality_summary"
+        android:entries="@array/voice_quality_entries"
+        android:entryValues="@array/voice_quality_values"
+        android:dialogTitle="@string/voice_quality_preferences_title"/>
+
     <PreferenceScreen
         android:title="@string/dialer_ui_settings_title"
         android:summary="@string/dialer_ui_settings_summary"
@@ -182,5 +190,7 @@
             android:targetPackage="com.android.contacts"
             android:targetClass="com.android.contacts.preference.DialpadPreferenceActivity"/>
     </PreferenceScreen>
+
+
 
 </PreferenceScreen>
