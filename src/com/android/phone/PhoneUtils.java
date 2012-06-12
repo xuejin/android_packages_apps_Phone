@@ -1861,7 +1861,6 @@ public class PhoneUtils {
             if (DBG) log("setMicrophoneMute: " + muted);
             audioManager.setMicrophoneMute(muted);
         } else {
-            phone.setMute(!muted);
             phone.setMute(muted);
         }
         NotificationMgr.getDefault().updateMuteNotification();
