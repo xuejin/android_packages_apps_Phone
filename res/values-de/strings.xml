@@ -760,4 +760,9 @@
     <string name="voice_quality_entry_crisp">Sehr klar</string>
     <string name="voice_quality_entry_bright">Hell</string>
 
+    <!-- Noise suppression -->
+    <string name="noise_suppression_title">Lärmunterdrückung</string>
+    <string name="noise_suppression_summary">Aktiviere Lärmunterdrückung für Anrufe</string>
+    <!-- End Noise suppression -->
+
 </resources>
