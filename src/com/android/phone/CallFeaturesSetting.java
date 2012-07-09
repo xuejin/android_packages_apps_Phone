@@ -161,6 +161,7 @@ public class CallFeaturesSetting extends PreferenceActivity
 
     private static final String BUTTON_VOICE_QUALITY_KEY = "button_voice_quality_key";
     private static String mVoiceQuality;
+    private static String mButtonVoiceQualitySum;
 
     private static final String VM_NUMBERS_SHARED_PREFERENCES_NAME = "vm_numbers";
 
@@ -499,6 +500,8 @@ public class CallFeaturesSetting extends PreferenceActivity
                     Settings.System.ENABLE_MWI_NOTIFICATION, mwi_notification);
         } else if (preference == mButtonVoiceQuality) {
             mVoiceQuality = (String) objValue;
+            mButtonVoiceQuality.setValue(mVoiceQuality);
+            mButtonVoiceQuality.setSummary(String.format(mButtonVoiceQualitySum, mButtonVoiceQuality.getEntry()));
         } else if (preference == mVoicemailProviders) {
             final String currentProviderKey = getCurrentVoicemailProviderKey();
             final String newProviderKey = (String)objValue;
@@ -1447,6 +1450,8 @@ public class CallFeaturesSetting extends PreferenceActivity
                 mButtonVoiceQuality = null;
             } else {
                 mButtonVoiceQuality.setOnPreferenceChangeListener(this);
+                mButtonVoiceQualitySum = getResources().getString(R.string.voice_quality_summary);
+                mVoiceQuality = mButtonVoiceQuality.getValue();
             }
         }
 
@@ -1533,10 +1538,6 @@ public class CallFeaturesSetting extends PreferenceActivity
         // create intent to bring up contact list
         mContactListIntent = new Intent(Intent.ACTION_GET_CONTENT);
         mContactListIntent.setType(android.provider.Contacts.Phones.CONTENT_ITEM_TYPE);
-
-        if (mButtonVoiceQuality != null) {
-            mButtonVoiceQuality.setValue(mVoiceQuality);
-        }
 
         // check the intent that started this activity and pop up the voicemail
         // dialog if we've been asked to.
@@ -1647,6 +1648,9 @@ public class CallFeaturesSetting extends PreferenceActivity
         if (mButtonNoiseSuppression != null) {
             int nsp = Settings.System.getInt(getContentResolver(), Settings.System.NOISE_SUPPRESSION, 1);
             mButtonNoiseSuppression.setChecked(nsp != 0);
+        }
+        if (mButtonVoiceQuality != null) {
+            mButtonVoiceQuality.setSummary(String.format(mButtonVoiceQualitySum, mButtonVoiceQuality.getEntry()));
         }
     }
 

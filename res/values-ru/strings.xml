@@ -755,7 +755,7 @@
 
     <!-- Voice quality filter -->
     <string name="voice_quality_preferences_title">Настройка CrystalTalk</string>
-    <string name="voice_quality_summary">Аудио-профили входящего вызова</string>
+    <string name="voice_quality_summary">Аудио-профил: %s</string>
 
     <string name="noise_suppression_title">Шумоподавление</string>
     <string name="noise_suppression_summary">Включить шумоподавление в телефонных разговорах</string>
