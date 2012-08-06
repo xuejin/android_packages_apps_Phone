@@ -633,4 +633,10 @@
     <string name="voice_quality_preferences_title">Настройка CrystalTalk</string>
     <string name="voice_quality_summary">Аудио-профили: %s</string>
 
+    <string name="perm_change_mobile_network">Изменение сети (2G/3G)</string>
+    <string name="perm_change_mobile_network_desc">Приложение, имеющее данное разрешение, может в любое время переключать режимы связи между 2G и 3G. Режим 3G имеет более высокую скорость и большее потребление энергии.</string>
+
+    <!-- Noise suppression -->
+    <string name="noise_suppression_title">Шумоподавление</string>
+    <string name="noise_suppression_summary">Включить шумоподавление в телефонных разговорах</string>
 </resources>
