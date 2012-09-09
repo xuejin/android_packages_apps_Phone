@@ -196,6 +196,12 @@
     <string name="roaming" msgid="8871412572928323707">"Adatbarangolás"</string>
     <string name="roaming_enable" msgid="7331106985174381987">"Csatlakozás adatszolgáltatásokhoz barangolás során"</string>
     <string name="roaming_disable" msgid="1843417228755568110">"Csatlakozás adatszolgáltatásokhoz barangolás során"</string>
+    <!-- Mobile network settings screen, setting check box name -->
+    <string name="national_roaming">Nemzeti adatbarangolás</string>
+    <!-- Mobile network settings screen, setting summary text when check box is selected -->
+    <string name="national_roaming_enable">Csatlakozzon adatszolgáltatásokhoz nemzeti barangolás során</string>
+    <!-- Mobile network settings screen, setting summary text when check box is clear -->
+    <string name="national_roaming_disable">Ne csatlakozzon adatszolgáltatásokhoz nemzeti barangolássorán</string>
     <string name="roaming_reenable_message" msgid="8913735676127858115">"Megszakadt az adatkapcsolat, mert elhagyta az otthoni hálózatot, és az adatbarangolás nincs bekapcsolva."</string>
     <string name="roaming_warning" msgid="7820963598559553967">"Engedélyezi az adatbarangolást? Lehet, hogy jelentős összeget számítanak fel érte!"</string>
     <string name="gsm_umts_options" msgid="6538311689850981686">"GSM/UMTS beállítások"</string>
@@ -639,5 +645,15 @@
     <string name="perm_change_mobile_network_desc">Az ilyen engedéllyel rendelkező alkalmazás, bármikor válthat 2G és 3G közt. A 3G gyorsabb, jobban meríti az akkumulátort, és több pénzbe is kerülhet a nagyobb adatforgalom miatt.</string>
     <string name="noise_suppression_title">Zajcsökkentés</string>
     <string name="noise_suppression_summary">Zajcsökkentés engedélyezése telefonhívások esetén</string>
-
+    <string name="phone_number_label">Saját telefonszám</string>
+    <string name="phone_number_summary">Készülékhez tartozó telefonszám beállítása</string>
+    <string name="advanced_setting">Speciális beállítások</string>
+    <string name="vibrate_outgoing">Rezgés válaszkor</string>
+    <string name="vibrate_outgoing_sum">Rezgéssel jelzi a telefonhívás létrejöttét</string>
+    <string name="vibrate_45">45 mp-ként rezeg</string>
+    <string name="vibrate_45_sum">Minden 45. másodpercben rezeg a kimenő hívások során</string>
+    <string name="vibrate_hangup">Bontáskor rezeg</string>
+    <string name="vibrate_hangup_sum">Rezgéssel jelzi a hívás befejeztét</string>
+    <string name="vibrate_call_waiting">Hívásvárakoztatáskor rezeg</string>
+    <string name="vibrate_call_waiting_sum">Hívásvárakoztatáskor rezeg a telefon</string>
 </resources>
