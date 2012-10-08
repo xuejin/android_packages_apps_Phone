@@ -524,7 +524,8 @@ public class PhoneApp extends Application implements AccelerometerListener.Orien
             // before registering for phone state changes
             PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
             mWakeLock = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK
-                    | PowerManager.ACQUIRE_CAUSES_WAKEUP,
+                    | PowerManager.ACQUIRE_CAUSES_WAKEUP
+                    | PowerManager.ON_AFTER_RELEASE,
                     LOG_TAG);
             // lock used to keep the processor awake, when we don't care for the display.
             mPartialWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK
@@ -605,7 +606,10 @@ public class PhoneApp extends Application implements AccelerometerListener.Orien
             intentFilter.addAction(TelephonyIntents.ACTION_RADIO_TECHNOLOGY_CHANGED);
             intentFilter.addAction(TelephonyIntents.ACTION_SERVICE_STATE_CHANGED);
             intentFilter.addAction(TelephonyIntents.ACTION_EMERGENCY_CALLBACK_MODE_CHANGED);
+            intentFilter.addAction(Intent.ACTION_SCREEN_OFF);
+            intentFilter.addAction(Intent.ACTION_SCREEN_ON);
             intentFilter.addAction(ACTION_VIBRATE_45);
+
             if (mTtyEnabled) {
                 intentFilter.addAction(TtyIntent.TTY_PREFERRED_MODE_CHANGE_ACTION);
             }
@@ -1316,6 +1320,7 @@ public class PhoneApp extends Application implements AccelerometerListener.Orien
      * 2) If a wired headset is connected
      * 3) if the speaker is ON
      * 4) If the slider is open(i.e. the hardkeyboard is *not* hidden)
+     * 5) If it was configured to stay on on Phone > Settings > Keep proximity sensor on
      *
      * @param state current state of the phone (see {@link Phone#State})
      */
@@ -1325,11 +1330,13 @@ public class PhoneApp extends Application implements AccelerometerListener.Orien
         if (proximitySensorModeEnabled()) {
             synchronized (mProximityWakeLock) {
                 // turn proximity sensor off and turn screen on immediately if
-                // we are using a headset, the keyboard is open, or the device
+                // we are using a headset and is not configured to keep sensor on
+                // the keyboard is open, or the device
                 // is being held in a horizontal position.
-                boolean screenOnImmediately = (isHeadsetPlugged()
+                boolean keepOn = PhoneUtils.PhoneSettings.keepProximitySensorOn(this);
+                boolean screenOnImmediately = ((!keepOn && isHeadsetPlugged())
                             || PhoneUtils.isSpeakerOn(this)
-                            || ((mBtHandsfree != null) && mBtHandsfree.isAudioOn())
+                            || (!keepOn && (mBtHandsfree != null) && mBtHandsfree.isAudioOn())
                             || mIsHardKeyboardOpen);
 
                 // We do not keep the screen off when the user is outside in-call screen and we are
@@ -1706,6 +1713,18 @@ public class PhoneApp extends Application implements AccelerometerListener.Orien
                 if (ringerMode == AudioManager.RINGER_MODE_SILENT) {
                     notifier.silenceRinger();
                 }
+            } else if (action.equals(Intent.ACTION_SCREEN_OFF) ||
+                    action.equals(Intent.ACTION_SCREEN_ON)) {
+                  if (VDBG) Log.d(LOG_TAG, "mReceiver: ACTION_SCREEN_OFF / ACTION_SCREEN_ON");
+                  /*
+                   * Disable Accelerometer Listener while in-call and the screen is off.
+                   * This is done to ensure that power consumption is kept to a minimum
+                   * in such a scenario
+                   */
+                  if (mAccelerometerListener != null) {
+                      mAccelerometerListener.enable(mLastPhoneState == Phone.State.OFFHOOK &&
+                              action.equals(Intent.ACTION_SCREEN_ON));
+                  }
             } else if (action.equals(ACTION_VIBRATE_45)) {
                 if (VDBG) Log.d(LOG_TAG, "mReceiver: ACTION_VIBRATE_45");
                 mAM.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + 60000, mVibrateIntent);
