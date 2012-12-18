@@ -29,6 +29,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
+import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.AsyncResult;
 import android.os.Handler;
@@ -61,7 +62,10 @@ import com.android.internal.telephony.cdma.CdmaConnection;
 import com.android.internal.telephony.CallManager;
 import com.android.internal.telephony.sip.SipPhone;
 
-
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
@@ -92,8 +96,12 @@ public class PhoneUtils {
     static final int AUDIO_RINGING = 1;  /** audio behaviour while ringing */
     static final int AUDIO_OFFHOOK = 2;  /** audio behaviour while in call. */
 
+    private static MediaRecorder recorder = null;
+
     /** Speaker state, persisting between wired headset connection events */
     private static boolean sIsSpeakerEnabled = false;
+
+    private static boolean sIsFirstCall = true;
 
     /** Hash table to store mute (Boolean) values based upon the connection.*/
     private static Hashtable<Connection, Boolean> sConnectionMuteTable =
@@ -1884,6 +1892,73 @@ public class PhoneUtils {
         }
     }
 
+    private static File createRecordingTempFile(String path) {
+        File dir = new File(path);
+        if (!dir.exists()) {
+            try {
+                dir.mkdirs();
+            } catch (Exception e) {
+                Log.e("PhoneUtils", "unable to create directory " + dir + ": " + e);
+                return null;
+            }
+        } else {
+            if (!dir.canWrite()) {
+                Log.e("PhoneUtils", "no write permission for directory: " + dir);
+                return null;
+            }
+        }
+        try {
+            return File.createTempFile("call", ".tmp", dir);
+        } catch (IOException e) {
+            Log.e("PhoneUtils", "unable to create temp file in " + dir + ": " + e);
+            return null;
+        }
+    }
+
+    static void startRecording(String address, String inOut) {
+        String dirName = "/sdcard/CallRecordings";
+        log("startRecording");
+        if (recorder == null) {
+            log("startRecording: create new recorder");
+            File recording = null;
+            recorder = new MediaRecorder();
+            recorder.setAudioSource(MediaRecorder.AudioSource.VOICE_RECOGNITION);
+            recorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+            recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+            recording = createRecordingTempFile(dirName);
+            if (recording == null) {
+                recorder.release();
+                recorder = null;
+                return;
+            }
+            // name recording filename based on call data
+            Calendar cl = Calendar.getInstance();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd-HHmmss-(");
+            String newRecordingName = dirName + "/" + sdf.format(cl.getTime()) + address + ")-" + inOut + ".m4a";
+            recording.renameTo(new File(newRecordingName));
+            recorder.setOutputFile(newRecordingName);
+            try {
+                recorder.prepare();
+                recorder.start();
+            } catch (IOException e) {
+                Log.e("PhoneUtils", "io problems while preparing [" +
+                recording.getAbsolutePath() + "]: " + e.getMessage());
+                recorder.release();
+                recorder = null;
+            }
+        }
+    }
+
+    static void stopRecording() {
+        log("stopRecording");
+        if (recorder != null) {
+            log("stopRecording: release old recorder");
+            recorder.stop();
+            recorder.release();
+            recorder = null;
+        }
+    }
+
     /* package */ static void setAudioMode() {
         setAudioMode(PhoneApp.getInstance().mCM);
     }
@@ -2385,6 +2460,14 @@ public class PhoneUtils {
     */
     private static void activateSpeakerIfDocked(Phone phone) {
         if (DBG) log("activateSpeakerIfDocked()...");
+
+        /* TODO: hack for defy libaudio (first call is mute),
+           should be removed when a proper fix is ready */
+        if (sIsFirstCall) {
+            sIsFirstCall = false;
+            turnOnSpeaker(phone.getContext(), true, false);
+            restoreSpeakerMode(phone.getContext());
+        }
 
         if (PhoneApp.mDockState == Intent.EXTRA_DOCK_STATE_DESK ||
                 PhoneApp.mDockState == Intent.EXTRA_DOCK_STATE_CAR) {

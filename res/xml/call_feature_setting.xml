@@ -240,6 +240,12 @@
             android:targetClass="com.android.phone.CdmaCallOptions"/>
     </PreferenceScreen>
 
+    <CheckBoxPreference
+        android:key="button_call_recording"
+        android:title="@string/call_recording_title"
+        android:persistent="true"
+        android:summary="@string/call_recording_summary"/>
+
     <ListPreference
         android:key="button_voice_quality_key"
         android:title="@string/voice_quality_preferences_title"
