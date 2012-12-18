@@ -167,6 +167,8 @@ public class CallNotifier extends Handler
     private boolean mVoicePrivacyState = false;
     private boolean mIsCdmaRedialCall = false;
 
+    private Call.State mLastCallState = null;
+
     // Emergency call tone and vibrate:
     private int mIsEmergencyToneOn;
     private int mCurrentEmergencyToneState = EMERGENCY_TONE_OFF;
@@ -909,7 +911,19 @@ public class CallNotifier extends Handler
                         mInCallRingbackTonePlayer.stopTone();
                         mInCallRingbackTonePlayer = null;
                     }
+                    if (PhoneUtils.PhoneSettings.callRecordingEnabled(mApplication)) {
+                        if (callState == Call.State.ACTIVE && callState != mLastCallState) {
+                            log("onPhoneStateChanged: State ACTIVE - startRecording, last state was: " + mLastCallState);
+                            Call call = PhoneUtils.getCurrentCall(fgPhone);
+                            Connection c = PhoneUtils.getConnection(fgPhone, call);
+                            PhoneUtils.startRecording(c.getAddress(), c.isIncoming() ? "in":"out");
+                        } else if (callState != Call.State.ACTIVE && mLastCallState == Call.State.ACTIVE) {
+                            log("onPhoneStateChanged: State not ACTIVE - stopRecording");
+                            PhoneUtils.stopRecording();
+                        }
+                    }
                 }
+                mLastCallState = callState;
             }
         }
     }

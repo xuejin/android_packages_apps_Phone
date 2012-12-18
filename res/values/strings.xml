@@ -1500,6 +1500,10 @@
     <string name="noise_suppression_summary">Enable noise suppression for calls</string>
     <!-- End Noise suppression -->
 
+    <!-- Call recording -->
+    <string name="call_recording_title">Call recording</string>
+    <string name="call_recording_summary">"WARNING: Call recording may be illegal in some countries! Consult your local laws before you enable this option! When enabled, recordings are stored in CallRecordings folder on SD Card."</string>
+
     <!-- Voice quality filter -->
     <string name="voice_quality_preferences_title">Voice quality</string>
     <string name="voice_quality_summary">Voice profile is currently set to: %s</string>
