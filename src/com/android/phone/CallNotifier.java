@@ -912,12 +912,15 @@ public class CallNotifier extends Handler
                         mInCallRingbackTonePlayer = null;
                     }
                     if (PhoneUtils.PhoneSettings.callRecordingEnabled(mApplication)) {
-                        if (callState == Call.State.ACTIVE && callState != mLastCallState) {
+                        if (callState == Call.State.ACTIVE &&
+                                callState != mLastCallState &&
+                                mLastCallState != Call.State.DISCONNECTING) {
                             log("onPhoneStateChanged: State ACTIVE - startRecording, last state was: " + mLastCallState);
                             Call call = PhoneUtils.getCurrentCall(fgPhone);
                             Connection c = PhoneUtils.getConnection(fgPhone, call);
                             PhoneUtils.startRecording(c.getAddress(), c.isIncoming() ? "in":"out");
-                        } else if (callState != Call.State.ACTIVE && mLastCallState == Call.State.ACTIVE) {
+                        } else if (callState != Call.State.ACTIVE &&
+                                mLastCallState == Call.State.ACTIVE) {
                             log("onPhoneStateChanged: State not ACTIVE - stopRecording");
                             PhoneUtils.stopRecording();
                         }
