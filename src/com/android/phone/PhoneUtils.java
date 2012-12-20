@@ -1901,11 +1901,9 @@ public class PhoneUtils {
                 Log.e("PhoneUtils", "unable to create directory " + dir + ": " + e);
                 return null;
             }
-        } else {
-            if (!dir.canWrite()) {
-                Log.e("PhoneUtils", "no write permission for directory: " + dir);
-                return null;
-            }
+        } else if (!dir.canWrite()) {
+            Log.e("PhoneUtils", "no write permission for directory: " + dir);
+            return null;
         }
         try {
             return File.createTempFile("call", ".tmp", dir);
@@ -1925,6 +1923,7 @@ public class PhoneUtils {
             recorder.setAudioSource(MediaRecorder.AudioSource.VOICE_RECOGNITION);
             recorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
             recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+            recorder.setAudioEncodingBitRate(18000);
             recording = createRecordingTempFile(dirName);
             if (recording == null) {
                 recorder.release();
@@ -1942,7 +1941,7 @@ public class PhoneUtils {
                 recorder.start();
             } catch (IOException e) {
                 Log.e("PhoneUtils", "io problems while preparing [" +
-                recording.getAbsolutePath() + "]: " + e.getMessage());
+                        newRecordingName + "]: " + e.getMessage());
                 recorder.release();
                 recorder = null;
             }
