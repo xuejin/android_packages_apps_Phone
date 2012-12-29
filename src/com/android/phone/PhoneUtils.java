@@ -2132,7 +2132,8 @@ public class PhoneUtils {
             // name recording filename based on call data
             Calendar cl = Calendar.getInstance();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd-HHmmss-(");
-            String newRecordingName = dirName + "/" + sdf.format(cl.getTime()) + address + ")-" + inOut + ".m4a";
+            String newRecordingName = dirName + "/" + sdf.format(cl.getTime()) +
+                    address.replace("*","x") + ")-" + inOut + ".m4a";
             recording.renameTo(new File(newRecordingName));
             recorder.setOutputFile(newRecordingName);
             try {
