@@ -918,7 +918,7 @@ public class CallNotifier extends Handler
                             log("onPhoneStateChanged: State ACTIVE - startRecording, last state was: " + mLastCallState);
                             Call call = PhoneUtils.getCurrentCall(fgPhone);
                             Connection c = PhoneUtils.getConnection(fgPhone, call);
-                            PhoneUtils.startRecording(c.getAddress(), c.isIncoming() ? "in":"out");
+                            PhoneUtils.startRecording(c.getAddress().replace("*","x"), c.isIncoming() ? "in":"out");
                         } else if (callState != Call.State.ACTIVE &&
                                 mLastCallState == Call.State.ACTIVE) {
                             log("onPhoneStateChanged: State not ACTIVE - stopRecording");
@@ -1077,6 +1077,8 @@ public class CallNotifier extends Handler
     private void onDisconnect(AsyncResult r) {
         if (VDBG) log("onDisconnect()...  CallManager state: " + mCM.getState());
 
+        log("onDisconnect: stopRecording");
+        PhoneUtils.stopRecording();
         mVoicePrivacyState = false;
         Connection c = (Connection) r.result;
         if (c != null) {

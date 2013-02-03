@@ -2112,50 +2112,74 @@ public class PhoneUtils {
         }
     }
 
-    static void startRecording(String address, String inOut) {
-        String dirName = "/sdcard/CallRecordings";
-        log("startRecording");
-        if (recorder == null) {
-            log("startRecording: create new recorder");
-            File recording = null;
-            recorder = new MediaRecorder();
-            recorder.setAudioSource(MediaRecorder.AudioSource.VOICE_RECOGNITION);
-            recorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
-            recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
-            recorder.setAudioEncodingBitRate(18000);
-            recording = createRecordingTempFile(dirName);
-            if (recording == null) {
-                recorder.release();
-                recorder = null;
-                return;
+    static void startRecording(final String address, final String inOut) {
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                String dirName = "/sdcard/CallRecordings";
+                log("startRecording");
+                if (recorder == null) {
+                    log("startRecording: create new recorder");
+                    File recording = null;
+                    recorder = new MediaRecorder();
+                    recorder.setAudioSource(MediaRecorder.AudioSource.VOICE_RECOGNITION);
+                    recorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+                    recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+                    recorder.setAudioEncodingBitRate(18000);
+                    recording = createRecordingTempFile(dirName);
+                    if (recording == null) {
+                        recorder.release();
+                        recorder = null;
+                        return;
+                    }
+                    // name recording filename based on call data
+                    Calendar cl = Calendar.getInstance();
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd-HHmmss-(");
+                    String newRecordingName = dirName + "/" + sdf.format(cl.getTime()) +
+                            address + ")-" + inOut + ".m4a";
+                    recording.renameTo(new File(newRecordingName));
+                    recorder.setOutputFile(newRecordingName);
+                    recorder.setOnInfoListener(new MediaRecorder.OnInfoListener() {
+                        @Override
+                        public void onInfo(MediaRecorder mr, int what, int extra) {
+                            Log.w("PhoneUtils", "MediaRecorder info received. what: " + what + " extra: " + extra);
+                        }
+                    });
+                    recorder.setOnErrorListener(new MediaRecorder.OnErrorListener() {
+                        @Override
+                        public void onError(MediaRecorder mr, int what, int extra) {
+                            Log.w("PhoneUtils", "MediaRecorder error received. what: " + what + " extra: " + extra);
+                        }
+                    });
+                    try {
+                        recorder.prepare();
+                        recorder.start();
+                    } catch (IOException e) {
+                        Log.e("PhoneUtils", "io problems while preparing [" +
+                                newRecordingName + "]: " + e.getMessage());
+                        recorder.release();
+                        recorder = null;
+                    }
+                }
             }
-            // name recording filename based on call data
-            Calendar cl = Calendar.getInstance();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd-HHmmss-(");
-            String newRecordingName = dirName + "/" + sdf.format(cl.getTime()) +
-                    address.replace("*","x") + ")-" + inOut + ".m4a";
-            recording.renameTo(new File(newRecordingName));
-            recorder.setOutputFile(newRecordingName);
-            try {
-                recorder.prepare();
-                recorder.start();
-            } catch (IOException e) {
-                Log.e("PhoneUtils", "io problems while preparing [" +
-                        newRecordingName + "]: " + e.getMessage());
-                recorder.release();
-                recorder = null;
-            }
-        }
+        };
+        thread.start();
     }
 
     static void stopRecording() {
-        log("stopRecording");
-        if (recorder != null) {
-            log("stopRecording: release old recorder");
-            recorder.stop();
-            recorder.release();
-            recorder = null;
-        }
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                log("stopRecording");
+                if (recorder != null) {
+                    log("stopRecording: release old recorder");
+                    recorder.stop();
+                    recorder.release();
+                    recorder = null;
+                }
+            }
+        };
+        thread.start();
     }
 
     /* package */ static void setAudioMode() {
