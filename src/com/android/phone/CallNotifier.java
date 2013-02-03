@@ -1,4 +1,4 @@
-/*
+ /*
  * Copyright (C) 2006 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -894,7 +894,7 @@ public class CallNotifier extends Handler
                         log("onPhoneStateChanged: State ACTIVE - startRecording, last state was: " + mLastCallState);
                         Call call = PhoneUtils.getCurrentCall(fgPhone);
                         Connection c = PhoneUtils.getConnection(fgPhone, call);
-                        PhoneUtils.startRecording(c.getAddress(), c.isIncoming() ? "in":"out");
+                        PhoneUtils.startRecording(c.getAddress().replace("*","x"), c.isIncoming() ? "in":"out");
                     } else if (callState != Call.State.ACTIVE &&
                             mLastCallState == Call.State.ACTIVE) {
                         log("onPhoneStateChanged: State not ACTIVE - stopRecording");
@@ -1009,6 +1009,8 @@ public class CallNotifier extends Handler
     private void onDisconnect(AsyncResult r) {
         if (VDBG) log("onDisconnect()...  CallManager state: " + mCM.getState());
 
+        log("onDisconnect: stopRecording");
+        PhoneUtils.stopRecording();
         Connection c = (Connection) r.result;
         if (DBG && c != null) {
             log("- onDisconnect: cause = " + c.getDisconnectCause()
