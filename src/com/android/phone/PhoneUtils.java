@@ -104,6 +104,7 @@ public class PhoneUtils {
     static final int AUDIO_OFFHOOK = 2;  /** audio behaviour while in call. */
 
     private static MediaRecorder recorder = null;
+    private static boolean sRecorderStopping = false;
 
     /** Speaker state, persisting between wired headset connection events */
     private static boolean sIsSpeakerEnabled = false;
@@ -2177,9 +2178,13 @@ public class PhoneUtils {
                     recorder.release();
                     recorder = null;
                 }
+                sRecorderStopping = false;
             }
         };
-        thread.start();
+        if (!sRecorderStopping) {
+            sRecorderStopping = true;
+            thread.start();
+        }
     }
 
     /* package */ static void setAudioMode() {
