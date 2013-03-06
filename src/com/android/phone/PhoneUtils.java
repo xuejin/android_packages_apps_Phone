@@ -103,7 +103,8 @@ public class PhoneUtils {
     static final int AUDIO_RINGING = 1;  /** audio behaviour while ringing */
     static final int AUDIO_OFFHOOK = 2;  /** audio behaviour while in call. */
 
-    private static MediaRecorder recorder = null;
+    private static MediaRecorder mRecorder = null;
+    private static File mRecordingFile = null;
     private static boolean sRecorderStopping = false;
 
     /** Speaker state, persisting between wired headset connection events */
@@ -2119,18 +2120,17 @@ public class PhoneUtils {
             public void run() {
                 String dirName = "/sdcard/CallRecordings";
                 log("startRecording");
-                if (recorder == null) {
+                if (mRecorder == null) {
                     log("startRecording: create new recorder");
-                    File recording = null;
-                    recorder = new MediaRecorder();
-                    recorder.setAudioSource(MediaRecorder.AudioSource.VOICE_RECOGNITION);
-                    recorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
-                    recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
-                    recorder.setAudioEncodingBitRate(18000);
-                    recording = createRecordingTempFile(dirName);
-                    if (recording == null) {
-                        recorder.release();
-                        recorder = null;
+                    mRecorder = new MediaRecorder();
+                    mRecorder.setAudioSource(MediaRecorder.AudioSource.VOICE_RECOGNITION);
+                    mRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+                    mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+                    mRecorder.setAudioEncodingBitRate(18000);
+                    mRecordingFile = createRecordingTempFile(dirName);
+                    if (mRecordingFile == null) {
+                        mRecorder.release();
+                        mRecorder = null;
                         return;
                     }
                     // name recording filename based on call data
@@ -2138,28 +2138,28 @@ public class PhoneUtils {
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd-HHmmss-(");
                     String newRecordingName = dirName + "/" + sdf.format(cl.getTime()) +
                             address + ")-" + inOut + ".m4a";
-                    recording.renameTo(new File(newRecordingName));
-                    recorder.setOutputFile(newRecordingName);
-                    recorder.setOnInfoListener(new MediaRecorder.OnInfoListener() {
+                    mRecordingFile.renameTo(new File(newRecordingName));
+                    mRecorder.setOutputFile(newRecordingName);
+                    mRecorder.setOnInfoListener(new MediaRecorder.OnInfoListener() {
                         @Override
                         public void onInfo(MediaRecorder mr, int what, int extra) {
                             Log.w("PhoneUtils", "MediaRecorder info received. what: " + what + " extra: " + extra);
                         }
                     });
-                    recorder.setOnErrorListener(new MediaRecorder.OnErrorListener() {
+                    mRecorder.setOnErrorListener(new MediaRecorder.OnErrorListener() {
                         @Override
                         public void onError(MediaRecorder mr, int what, int extra) {
                             Log.w("PhoneUtils", "MediaRecorder error received. what: " + what + " extra: " + extra);
                         }
                     });
                     try {
-                        recorder.prepare();
-                        recorder.start();
+                        mRecorder.prepare();
+                        mRecorder.start();
                     } catch (IOException e) {
                         Log.e("PhoneUtils", "io problems while preparing [" +
                                 newRecordingName + "]: " + e.getMessage());
-                        recorder.release();
-                        recorder = null;
+                        mRecorder.release();
+                        mRecorder = null;
                     }
                 }
             }
@@ -2172,11 +2172,17 @@ public class PhoneUtils {
             @Override
             public void run() {
                 log("stopRecording");
-                if (recorder != null) {
+                if (mRecorder != null) {
                     log("stopRecording: release old recorder");
-                    recorder.stop();
-                    recorder.release();
-                    recorder = null;
+                    try {
+                        mRecorder.stop();
+                    } catch (RuntimeException e) {
+                        // stop called immediately after start, no audio data were written
+                        mRecordingFile.delete();
+                    } finally {
+                        mRecorder.release();
+                        mRecorder = null;
+                    }
                 }
                 sRecorderStopping = false;
             }
