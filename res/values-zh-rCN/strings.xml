@@ -749,4 +749,16 @@
     <string name="dialog_phone_goggles_ok">确定</string>
     <string name="dialog_phone_goggles_cancel">取消</string>
 
+    <!-- Call recording -->
+    <string name="call_recording_title">通话录音</string>
+    <string name="call_recording_summary">"警告: 在某些国家通话录音可能是非法的! 启用此选项前请咨询您当地的法律! 当启用时,录音文件存储在SD卡上的CallRecordings文件夹."</string>
+
+    <!-- Voice quality filter -->
+    <string name="voice_quality_preferences_title">语音品质</string>
+    <string name="voice_quality_summary">"选择最佳通话音频配置文件(CrystalTalk)"</string>
+    <!-- Do not remove those, they're used from overlays -->
+    <string name="voice_quality_entry_normal">正常</string>
+    <string name="voice_quality_entry_clear">清晰</string>
+    <string name="voice_quality_entry_crisp">清脆</string>
+    <string name="voice_quality_entry_bright">宏亮</string>
 </resources>
